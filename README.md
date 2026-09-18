@@ -1,36 +1,33 @@
-#Project Overview:
-**Project Title**: Retail Sales Data Analysis
-**Level**: Beginner
+# Project Overview:
+**Project Title**: Retail Sales Data Analysis<br>
+**Level**: Beginner<br>
 This project analyzes a retail sales dataset using SQL, starting with data cleaning and basic EDA before moving into deeper analysis of real-world business problems. The analysis will turn data findings into business insights and recommendations. The project is designed as a practical learning project for aspiring Data Analysts.
 
-#Project Objective:
+# Project Objective:<br>
 Explore and prepare the retail sales data for analysis.
 Develop and solve 10 unique real-world business problems using SQL.
 Apply SQL techniques such as aggregations, subqueries, CTEs, and window functions.
 Identify meaningful findings and translate them into business insights.
 Provide data-driven recommendations based on the analysis to support business decision-making and improve overall performance.
 
-#Project Structure:
-##1. Data setup
-**Database:**
+# Project Structure:<br>
+## 1. Data setup<br>
+**Database:**<br>
 The dataset is stored in a PostgreSQL database named retail_sale_db.
 
-**Table:**
+**Table:**<br>
 The database contains a table named retail_sale with the following columns:
-
-**Column	Data Type**
-transactions_id	INT
-sale_date	DATE
-sale_time	TIME
-customer_id	INT
-gender	        VARCHAR(15)
-age	        INT
-category	VARCHAR(20)
-quantity	INT
-price_per_unit	FLOAT
-cogs	        FLOAT
-total_sale	FLOAT
-
+transactions_id	INT,
+sale_date	    DATE,
+sale_time	    TIME,
+customer_id	    INT,
+gender	        VARCHAR(15),
+age	            INT,
+category	    VARCHAR(20),
+quantity	    INT,
+price_per_unit	FLOAT,
+cogs	        FLOAT,
+total_sale	    FLOAT
 
 **Database and Table creation:**
 ```sql
@@ -50,10 +47,10 @@ create table retail_sale
 );	
 ```
 
-##2. Data Import
+## 2. Data Import<br>
 The retail sales dataset was imported into the retail_sale table for further data cleaning, exploratory analysis, and SQL-based business analysis.
 
-##3.Data Profiling(Understanding Data)
+## 3.Data Profiling(Understanding Data)<br>
 **1. Total number of records**
 ```sql
  select count(*) as "Total_Records" from retail_sale;
@@ -118,8 +115,8 @@ group by customer_id
 having count(*)>1
 order by customer_id;
 ```
-##4. Data Quality Check
-Is my data valid, complete, and reliable enough to analyze?
+## 4. Data Quality Check<br>
+Is my data valid, complete, and reliable enough to analyze?<br>
 
 **1. Check Null value**
 ```sql
@@ -191,7 +188,7 @@ where price_per_unit<=0
 	  or total_sale<=0;
 ```
 
-##Data Cleaning
+## 5. Data Cleaning<br>
 **1. Replacing NULL age values with the rounded average age.**
 ```sql
 update retail_sale 
@@ -208,7 +205,7 @@ and cogs is null
 and total_sale is null;
 ```
 
-##Exploratory Data Analysis (EDA)
+## 6.Exploratory Data Analysis (EDA)<br>
 **1. Overall sales Analysis**
 ```sql
 select min(total_sale) as "Minimum_Sale",
