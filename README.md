@@ -237,7 +237,7 @@ from retail_sale
 group by gender;
 ```
 
-## Business Problems<br>
+## Business Problems
 **1. What percentage of total revenue comes from each category, and which categories contribute disproportionately to revenue?**
 ```sql
 with Total_revenue as (
@@ -272,6 +272,7 @@ Clothing has more transactions but slightly lower revenue.
 The business can focus on cross-selling related products in the Clothing category to increase revenue per transaction.
 
 
+
 **2. Who are the top 10 revenue-generating customers, and what are their revenue contributions as a percentage?**
 ```sql
 WITH top10_customer AS (
@@ -300,7 +301,9 @@ The top 10 customers generated a total revenue of $214,400.<br>
 The top 10 customers are important contributors to the business revenue.<br>
 Customer 3 is the highest contributor among them.<br>
 ###Recommendation
-The business can give loyalty rewards or gift cards to these top 10 customers to encourage them to buy again.<br>
+The business can give loyalty rewards or gift cards to these top 10 customers to encourage them to buy again.
+
+
 
 **3. Which customers have high transaction frequency but relatively low average transaction value?**
 ```sql
@@ -337,6 +340,7 @@ where transaction_frequency > overall_avg_transaction_frequency and
 The business can offer discounts, combo offers, or related products to encourage these customers to spend more.
 
 
+
 **4. Which category shows the highest month-over-month revenue growth?**
 ```sql
 with monthly_sale as(
@@ -369,17 +373,18 @@ from monthly_growth
 where previous_month_revenue is not null 
 order by category, sale_month;
 ```
-###Findings
+### Findings
 - Electronics had the highest growth of 382% in July 2023.
 - All categories had increases and decreases in revenue.
-###Insights
+### Insights
 - Electronics had the highest monthly growth.
 - Sales changed from month to month.
 - This shows that monthly sales are not consistent.
-###Recommendations
+### Recommendations
 - Check the reasons for high-growth months.
 - Use successful promotions or sales strategies again.
 - Investigate months with negative growth to improve sales.
+
 
 **5. Which product categories are most preferred by different age groups (Young, Middle, and Senior)?**
 ```sql
@@ -426,17 +431,174 @@ where category_rank = 1
 order by age_group;
 ```
 
-###Findings
+### Findings
 - Middle-age customers buy more Electronics.
 - Senior customers buy more Clothing.
 - Young customers buy more Beauty products.
-###Insights
+### Insights
 - Product preference changes by age group.
 - Different age groups prefer different categories.
-###Recommendations
+### Recommendations
 - Promote Electronics to Middle-age customers.
 - Promote Clothing to Senior customers.
 - Promote Beauty products to Young customers.
+
+
+**6. Which product categories generate the highest revenue during each time of day?**
+```sql
+with time_period as(
+select 
+category,
+sum(total_sale) as total_revenue,
+case when sale_time < '12:00:00' then 'Morning'
+	 when sale_time < '17:00:00' then 'Afternoon'
+	 when sale_time < '23:59:00' then 'Evening'
+end as time_category
+from retail_sale
+group by category, time_category
+),
+
+ranked_categories as(
+select 
+time_category,
+category,
+total_revenue,
+rank() over (partition by time_category order by total_revenue desc) as rank_category
+from time_period
+)
+
+select
+time_category,
+category,
+total_revenue,
+rank_category
+from ranked_categories 
+where rank_category = 1 
+order by time_category;
+```
+
+### Findings
+- Clothing has the highest revenue in the morning.
+- Electronics has the highest revenue in the afternoon and evening.
+### Insights
+- Product sales vary by time of day.
+### Recommendations
+- romote Clothing in the morning.
+- Promote Electronics in the afternoon and evening.
+
+
+**7. Which categories have high quantity sales but low average transaction value?**
+```sql
+with metrics as (
+select 
+category,
+sum(quantity) as total_quantity,
+sum(total_sale) as total_transaction_value,
+round(avg(total_sale)) as avg_transaction_value
+from retail_sale
+group by category
+),
+highest_quantity as(
+select 
+category,
+total_quantity,
+total_transaction_value,
+avg_transaction_value,
+rank() over(order by total_quantity desc) as high_quantity_rank,
+rank() over(order by avg_transaction_value) as low_transaction_value_rank
+from metrics
+)
+select 
+category,
+total_quantity,
+avg_transaction_value,
+high_quantity_rank,
+low_transaction_value_rank
+from highest_quantity
+where high_quantity_rank = 1 and low_transaction_value_rank = 1
+order by category, total_quantity,avg_transaction_value, high_quantity_rank,
+low_transaction_value_rank;
+```
+
+### Findings
+- Clothing has the highest quantity sold, with 1,785 units.
+- Clothing also has the lowest average transaction value, at $444.
+
+### Insights
+- Clothing has strong sales volume, but there is an opportunity to increase the amount spent per transaction.
+
+### Recommendations
+- Offer combo deals or bundle related Clothing products.
+- Recommend complementary products to encourage customers to buy more items in each transaction.
+- Use promotions that encourage customers to increase their purchase value.
+
+**8. Which sales dates generated higher revenue than the average daily revenue?**
+```sql
+with daily_sale as(
+select 
+sale_date,
+sum(total_sale) as daily_revenue
+from retail_sale
+group by sale_date
+),
+
+avg_daily_sale as(
+select 
+round(avg(daily_revenue)) as avg_daily_revenue
+from daily_sale
+)
+
+select 
+d.sale_date,
+d.daily_revenue,
+a.avg_daily_revenue
+from daily_sale d
+cross join avg_daily_sale a
+where d.daily_revenue > a.avg_daily_revenue
+order by d.daily_revenue;
+```
+
+### Findings
+- Average daily revenue was $1,409.
+- Several dates had revenue above the average.
+- The highest daily revenue was $8,500 on October 10, 2022.
+### Insights
+- Sales are higher on some dates than others.
+- Some dates generate much more revenue than the average.
+### Recommendations
+- Find out what caused the high sales on those dates.
+- Use successful strategies from high-sales dates to improve sales on other dates.
+
+# Overall Project Summary
+
+This project analyzed retail sales data using PostgreSQL.<br>
+The project included:<br>
+- Data cleaning and handling missing values.
+- Exploratory data analysis to understand the dataset.
+- Analysis of 8 real-world business problems.
+- Use of SQL techniques such as aggregations, CTEs, subqueries, window functions, CASE, RANK(), ROW_NUMBER(), and LAG().
+- Analysis of sales by category, customers, age groups, time of day, and sales dates.
+- Identifying findings and turning them into simple business insights and recommendations.
+
+Overall, this project helped demonstrate how SQL can be used to analyze retail data and support business decision-making.
+
+# Conclusion
+This project provided practical experience in using SQL to clean, explore, and analyze retail sales data. The analysis identified customer, category, time-based, and sales-date patterns and converted the findings into simple business insights and recommendations.
+
+# How to Use
+- Clone the repository from GitHub.
+- Set up the PostgreSQL database and retail_sale table.
+- Load the retail sales data.
+- Run the SQL queries to perform the analysis.
+- Modify the queries to explore additional business questions.
+
+# Author 
+Banu Priya<br>
+Aspiring Data Analyst <br>
+This project is part of my portfolio and demonstrates practical SQL skills used for data cleaning, exploratory analysis, and solving real-world business problems.
+
+
+
 
 
 
