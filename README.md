@@ -5,7 +5,7 @@ This project analyzes a retail sales dataset using SQL, starting with data clean
 
 # Project Objective:<br>
 Explore and prepare the retail sales data for analysis.
-Develop and solve 10 unique real-world business problems using SQL.
+Develop and solve 8 unique real-world business problems using SQL.
 Apply SQL techniques such as aggregations, subqueries, CTEs, and window functions.
 Identify meaningful findings and translate them into business insights.
 Provide data-driven recommendations based on the analysis to support business decision-making and improve overall performance.
@@ -483,7 +483,7 @@ order by time_category;
 ### Insights
 - Product sales vary by time of day.
 ### Recommendations
-- romote Clothing in the morning.
+- Promote Clothing in the morning.
 - Promote Electronics in the afternoon and evening.
 
 
@@ -569,35 +569,69 @@ order by d.daily_revenue;
 - Find out what caused the high sales on those dates.
 - Use successful strategies from high-sales dates to improve sales on other dates.
 
-# Overall Project Summary
 
-This project analyzed retail sales data using PostgreSQL.<br>
+
+# Power BI Dashboard
+
+The cleaned retail sales data was also visualized using Power BI to create an interactive dashboard.
+
+**Dashboard KPIs**
+- Total Sales: $911,720
+- Total Transactions: 1,997
+- Total Quantity Sold: 5,018
+- Total Customers: Unique customers in the dataset
+- Average Sale: $456.54
+- Dashboard Visuals
+
+**The dashboard includes:**
+- Sales by Category
+- Monthly Sales Trend
+- Top 10 Customers by Total Sales
+- Sales by Age Group
+- Quantity Sold by Category
+- Total Sales by Gender
+- Interactive Filters
+
+**The dashboard includes three slicers:**
+- Category
+- Gender
+- Age Group
+
+These slicers allow users to filter the dashboard and explore the sales data from different perspectives.
+
+#Overall Project Summary
+This project analyzed retail sales data using PostgreSQL and Power BI.<br>
 The project included:<br>
 - Data cleaning and handling missing values.
 - Exploratory data analysis to understand the dataset.
 - Analysis of 8 real-world business problems.
 - Use of SQL techniques such as aggregations, CTEs, subqueries, window functions, CASE, RANK(), ROW_NUMBER(), and LAG().
-- Analysis of sales by category, customers, age groups, time of day, and sales dates.
+- Analysis of sales by category, customers, age groups, gender, time, and sales trends.
+- Creation of an interactive Power BI dashboard to visualize key sales and customer insights.
+- Use of KPIs, charts, and slicers to explore the data from different perspectives.
 - Identifying findings and turning them into simple business insights and recommendations.
 
-Overall, this project helped demonstrate how SQL can be used to analyze retail data and support business decision-making.
+Overall, this project demonstrates how SQL and Power BI can be used together to analyze retail data, identify business patterns, and support data-driven decision-making.
 
 # Conclusion
-This project provided practical experience in using SQL to clean, explore, and analyze retail sales data. The analysis identified customer, category, time-based, and sales-date patterns and converted the findings into simple business insights and recommendations.
+
+This project provided practical experience in using PostgreSQL to clean, explore, and analyze retail sales data and Power BI to visualize the results. The analysis identified customer, category, demographic, and time-based patterns and converted the findings into simple business insights and recommendations.
+
+The project demonstrates an end-to-end data analysis workflow, from data cleaning and SQL analysis to interactive dashboard creation and business interpretation.
 
 # How to Use
 - Clone the repository from GitHub.
 - Set up the PostgreSQL database and retail_sale table.
-- Load the retail sales data.
+- Load the cleaned retail sales data.
 - Run the SQL queries to perform the analysis.
-- Modify the queries to explore additional business questions.
+- Review the findings, insights, and recommendations for each business problem.
+- Open the Power BI dashboard to explore the sales data using KPIs, charts, and slicers.
+- Modify the SQL queries to explore additional business questions.
 
-# Author 
+## Author
 Banu Priya<br>
-Aspiring Data Analyst <br>
-This project is part of my portfolio and demonstrates practical SQL skills used for data cleaning, exploratory analysis, and solving real-world business problems.
-
-
+Aspiring Data Analyst<br>
+This project is part of my portfolio and demonstrates practical skills in SQL and Power BI, including data cleaning, exploratory analysis, business problem solving, data visualization, and translating data findings into business insights and recommendations.
 
 
 
